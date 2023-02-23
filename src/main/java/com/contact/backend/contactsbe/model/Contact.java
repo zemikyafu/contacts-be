@@ -62,4 +62,8 @@ public class Contact {
     public void setType(String type) {
         this.type = type;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
