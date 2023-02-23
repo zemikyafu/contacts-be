@@ -3,7 +3,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "post")
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,13 +46,17 @@ public class Users {
         this.name = name;
     }
 
-    public Users() {
+    public User() {
     }
 
-    public Users(int id, String email, String password, String name) {
+    public User(int id, String email, String password, String name) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

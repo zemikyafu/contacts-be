@@ -3,13 +3,13 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "post")
-public class Contacts {
+public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @OneToOne(mappedBy = "address")
-    private Users users;
+    private User users;
 
     @Column(name = "name")
     private String name;
@@ -37,5 +37,29 @@ public class Contacts {
 
     public String getType() {
         return type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public User getUsers() {
+        return users;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
