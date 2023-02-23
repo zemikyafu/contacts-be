@@ -1,0 +1,17 @@
+-- drop  database IF EXISTS  contactdb;
+-- drop user IF EXISTS  contactManager;
+-- create user contactManager identified by 'contactManager';
+-- CREATE DATABASE   contactdb;
+-- GRANT ALL PRIVILEGES ON contactManager.*  TO contactdb;
+--
+-- USE  contactdb
+--
+-- GRANT ALL PRIVILEGES ON *.* TO contactdb;
+--
+--
+-- create table posts(
+--   id integer primary key not null ,
+--   userid integer,
+--   title varchar(28) not null,
+--   body text
+-- );
