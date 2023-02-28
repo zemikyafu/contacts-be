@@ -37,7 +37,7 @@ public class ContactService {
         else return contact ;
     }
     //
-    public Optional<Contact> updateUser(Contact contact, int id)
+    public Optional<Contact> updateContact(Contact contact, int id)
     {
 
 

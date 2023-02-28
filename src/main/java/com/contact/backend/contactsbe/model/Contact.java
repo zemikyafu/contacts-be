@@ -2,14 +2,17 @@ package com.contact.backend.contactsbe.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "post")
+@Table(name = "contact")
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(mappedBy = "address")
-    private User users;
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    private User user;
 
     @Column(name = "name")
     private String name;
@@ -43,9 +46,9 @@ public class Contact {
         return id;
     }
 
-    public User getUsers() {
-        return users;
-    }
+//    public User getUsers() {
+//        return users;
+//    }
 
     public void setName(String name) {
         this.name = name;

@@ -2,13 +2,15 @@ package com.contact.backend.contactsbe.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "post")
+@Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @OneToOne(mappedBy = "user")
+    private Contact Contact;
     public int getId() {
         return id;
     }
