@@ -4,11 +4,9 @@ import com.contact.backend.contactsbe.model.User;
 import com.contact.backend.contactsbe.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import com.contact.backend.contactsbe.dto.ResponseMessageDto;
+import com.contact.backend.contactsbe.repositories.dto.ResponseMessageDto;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -29,30 +27,41 @@ public class UserService {
         return userRepository.save(user);
     }
     //
-    public User get(Integer id) {
+    public User findUserByEmail(String email) {
         User user = new User ();
-        if ( userRepository.findById(id).isPresent())
-            return userRepository.findById(id).get();
+        if ( userRepository.findUserByEmail(email).getEmail()!=null)
+            return userRepository.findUserByEmail(email);
         else return user ;
     }
-    //
-    public Optional<User> updateUser(User user, int id)
+    public ResponseMessageDto updateUser(User user, int id)
     {
 
+        ResponseMessageDto responseMessageDto = new ResponseMessageDto();
 
-        return Optional.of(userRepository.findById(id)
-                .map(userFound -> {
-                    userFound.setId(id);
-                    userFound.setName(user.getName());
-                    userFound.setPassword(user.getPassword());
-                    userFound.setEmail(user.getEmail());
-                    return userRepository.save(user);
-                }).orElseGet(() -> {
-                    user.setId(id);
-                    return userRepository.save(user);
-                }));
+        try{
+            if (!userRepository.findById(id).isEmpty())
+            {
+                userRepository.save(user);
+                responseMessageDto.setMessage("User Updated");
+                responseMessageDto.setStatus(true);
+            }
+            else
+            {
+                responseMessageDto.setMessage("User is not found");
+                responseMessageDto.setStatus(true);
+            }
 
+        }
+        catch (Exception ex)
+        {
+            responseMessageDto.setMessage("User is Not Updated");
+            responseMessageDto.setStatus(false);
+
+        }
+        return responseMessageDto;
     }
+
+
     public ResponseMessageDto delete( int id) {
         ResponseMessageDto responseMessageDto= new ResponseMessageDto();
         try{

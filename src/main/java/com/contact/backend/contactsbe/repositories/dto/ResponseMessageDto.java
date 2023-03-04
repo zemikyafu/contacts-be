@@ -1,4 +1,4 @@
-package com.contact.backend.contactsbe.dto;
+package com.contact.backend.contactsbe.repositories.dto;
 
 public class ResponseMessageDto {
    private String message;

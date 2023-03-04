@@ -4,16 +4,17 @@ import com.contact.backend.contactsbe.model.Contact;
 import com.contact.backend.contactsbe.model.User;
 import com.contact.backend.contactsbe.repositories.ContactRepository;
 import com.contact.backend.contactsbe.repositories.UserRepository;
+import com.contact.backend.contactsbe.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import com.contact.backend.contactsbe.dto.ResponseMessageDto;
+import com.contact.backend.contactsbe.repositories.dto.ResponseMessageDto;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ContactService {
+
+
     private ContactRepository contactRepository;
     @Autowired
     public ContactService(ContactRepository contactRepository)
@@ -21,12 +22,19 @@ public class ContactService {
         this.contactRepository=contactRepository;
     }
 
+    @Autowired
+    private UserRepository userRepository;
+
     public List<Contact> listAll()
     {
         return contactRepository.findAll();
     }
 
-    public Contact save(Contact contact) {
+    public Contact save(Contact contact, UserPrincipal currentUser) {
+        User user = userRepository.findUserByEmail(currentUser.getEmail());
+        System.out.println("user found "+user.getId() );
+        System.out.println("user found "+user.getName());
+        contact.setUser(user);
         return contactRepository.save(contact);
     }
     //
@@ -37,35 +45,64 @@ public class ContactService {
         else return contact ;
     }
     //
-    public Optional<Contact> updateContact(Contact contact, int id)
+//    public Optional<Contact> updateContact(Contact contact, int id)
+//    {
+//
+//
+//        return Optional.of(contactRepository.findById(id)
+//                .map(contactFound -> {
+//                    contactFound.setId(id);
+//                    contactFound.setName(contact.getName());
+//                    contactFound.setEmail(contact.getEmail());
+//                    contactFound.setType(contact.getType());
+//                    contactFound.setPhone(contact.getPhone());
+//                    return contactRepository.save(contact);
+//                }).orElseGet(() -> {
+//                    contact.setId(id);
+//                    return contactRepository.save(contact);
+//                }));
+//
+//    }
+
+    public ResponseMessageDto updateContact(Contact contact, int id)
     {
 
+        ResponseMessageDto responseMessageDto = new ResponseMessageDto();
 
-        return Optional.of(contactRepository.findById(id)
-                .map(contactFound -> {
-                    contactFound.setId(id);
-                    contactFound.setName(contact.getName());
-                    contactFound.setEmail(contact.getEmail());
-                    contactFound.setType(contact.getType());
-                    contactFound.setPhone(contact.getPhone());
-                    return contactRepository.save(contact);
-                }).orElseGet(() -> {
-                    contact.setId(id);
-                    return contactRepository.save(contact);
-                }));
+        try{
+//
+            if (!contactRepository.findById(id).isEmpty())
+            {
+                contactRepository.save(contact);
+                responseMessageDto.setMessage("Record Updated");
+                responseMessageDto.setStatus(true);
+            }
+            else
+            {
+                responseMessageDto.setMessage("Contact not found");
+                responseMessageDto.setStatus(true);
+            }
 
+        }
+        catch (Exception ex)
+        {
+            responseMessageDto.setMessage("Contact is Not Updated");
+            responseMessageDto.setStatus(false);
+
+        }
+        return responseMessageDto;
     }
     public ResponseMessageDto delete( int id) {
-        ResponseMessageDto responseMessageDto = null;
+        ResponseMessageDto responseMessageDto = new ResponseMessageDto();
         try{
             contactRepository.deleteById(id);
 
-            responseMessageDto.setMessage("Record deleted");
+            responseMessageDto.setMessage("Contact deleted");
             responseMessageDto.setStatus(true);
         }
         catch (Exception ex)
         {
-            responseMessageDto.setMessage("Record not  deleted");
+            responseMessageDto.setMessage("Contact is not  deleted");
             responseMessageDto.setStatus(false);
 
         }
