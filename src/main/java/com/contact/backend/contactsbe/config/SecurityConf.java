@@ -3,24 +3,19 @@ package com.contact.backend.contactsbe.config;
 import com.contact.backend.contactsbe.repositories.UserRepository;
 import com.contact.backend.contactsbe.security.JwtAuthenticationEntryPoint;
 import com.contact.backend.contactsbe.security.JwtAuthenticationFilter;
-import com.contact.backend.contactsbe.services.CustomUserDetailsServiceImpl;
-import com.contact.backend.contactsbe.services.JwtUserDetailsService;
+import com.contact.backend.contactsbe.services.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -33,7 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConf  {
 
-   private final CustomUserDetailsServiceImpl customUserDetailsService;
+   private final CustomUserDetailsService customUserDetailsService;
 
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
@@ -51,7 +46,7 @@ public class SecurityConf  {
 
 
     @Autowired
-    public SecurityConf(UserRepository userRepository, CustomUserDetailsServiceImpl customUserDetailsService,
+    public SecurityConf(UserRepository userRepository, CustomUserDetailsService customUserDetailsService,
                         JwtAuthenticationEntryPoint unauthorizedHandler, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.customUserDetailsService = customUserDetailsService;
         this.unauthorizedHandler = unauthorizedHandler;
