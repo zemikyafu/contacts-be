@@ -2,7 +2,7 @@ package com.contact.backend.contactsbe.dto;
 
 public class ResponseMessageDto {
    private String message;
-
+    private  Boolean status ;
     public ResponseMessageDto() {
     }
 
@@ -22,7 +22,7 @@ public class ResponseMessageDto {
         this.status = status;
     }
 
-    private  Boolean status ;
+
 
 
 }
