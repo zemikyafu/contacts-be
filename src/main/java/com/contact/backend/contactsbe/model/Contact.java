@@ -10,8 +10,9 @@ public class Contact {
 
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    //  @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "name")
@@ -46,9 +47,7 @@ public class Contact {
         return id;
     }
 
-//    public User getUsers() {
-//        return users;
-//    }
+
 
     public void setName(String name) {
         this.name = name;
@@ -68,5 +67,9 @@ public class Contact {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user=user;
     }
 }

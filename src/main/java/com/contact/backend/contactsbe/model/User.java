@@ -1,5 +1,8 @@
 package com.contact.backend.contactsbe.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -7,11 +10,17 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @OneToOne(mappedBy = "user")
-    private Contact Contact;
-    public int getId() {
+ 
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Contact> Contact;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> post;
+
+    public Long getId() {
         return id;
     }
 
@@ -20,6 +29,9 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+
+
 
     @Column(name = "name")
     private String name ;
@@ -51,14 +63,14 @@ public class User {
     public User() {
     }
 
-    public User(int id, String email, String password, String name) {
+    public User( String email, String password, String name) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }
