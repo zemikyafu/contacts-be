@@ -11,6 +11,7 @@ import com.contact.backend.contactsbe.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,9 +28,6 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-	private static final String USER_ROLE_NOT_SET = "User role not set";
-
-
 	@Autowired
 	private UserRepository userRepository;
 
@@ -47,15 +45,27 @@ public class AuthController {
 
 	@PostMapping("/signin")
 	public ResponseEntity<JwtAuthenticationResponse> authenticateUser(@Valid  @RequestBody LoginRequest loginRequest) {
+		String jwt;
+		JwtAuthenticationResponse jwtAuthenticationResponse =new JwtAuthenticationResponse();
+            try {
+				Authentication authentication = authenticationManager.authenticate(
+						new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+				 jwt = jwtTokenProvider.generateToken(authentication);
+				 jwtAuthenticationResponse.setStatus(true);
+				 jwtAuthenticationResponse.setMessage("SignIn Successful");
+				 jwtAuthenticationResponse.setTokenType("Bearer");
+				jwtAuthenticationResponse.setAccessToken(jwt);
+			  }
+			catch(BadCredentialsException ex)
+			{
+				jwtAuthenticationResponse.setStatus(false);
+				jwtAuthenticationResponse.setMessage("SignIn Fail");
 
-			Authentication authentication = authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+			}
 
-			SecurityContextHolder.getContext().setAuthentication(authentication);
-			String jwt = jwtTokenProvider.generateToken(authentication);
-
-			return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+			return ResponseEntity.ok(jwtAuthenticationResponse);
 
 	}
 
@@ -63,25 +73,23 @@ public class AuthController {
 	public ResponseEntity<ApiResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
 
 		if (Boolean.TRUE.equals(userRepository.existsByEmail(signUpRequest.getEmail()))) {
-		//	throw new BlogapiException(HttpStatus.BAD_REQUEST, "Email is already taken");
+			return  ResponseEntity.badRequest().body(new ApiResponse(false, "Email is already taken"));
+
+		}
+		else
+		{
+
+			String name = signUpRequest.getName().toLowerCase();
+			String email = signUpRequest.getEmail().toLowerCase();
+			String password = passwordEncoder.encode(signUpRequest.getPassword());
+			User user = new User(email, password,name);
+			User result = userRepository.save(user);
+			URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/{userId}")
+					.buildAndExpand(result.getId()).toUri();
+			return ResponseEntity.created(location).body(new ApiResponse(Boolean.TRUE, "User registered successfully"));
 
 		}
 
-
-		String name = signUpRequest.getName().toLowerCase();
-
-		String email = signUpRequest.getEmail().toLowerCase();
-
-		String password = passwordEncoder.encode(signUpRequest.getPassword());
-
-		User user = new User(email, password,name);
-
-		User result = userRepository.save(user);
-
-		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/{userId}")
-				.buildAndExpand(result.getId()).toUri();
-
-		return ResponseEntity.created(location).body(new ApiResponse(Boolean.TRUE, "User registered successfully"));
 	}
 
 }

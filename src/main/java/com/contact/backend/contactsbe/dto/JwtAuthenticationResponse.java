@@ -5,10 +5,14 @@ import lombok.Data;
 @Data
 public class JwtAuthenticationResponse {
 	private String accessToken;
-	private String tokenType = "Bearer";
+	private String tokenType ;
+    private String message;
+	private boolean status ;
 
-	public JwtAuthenticationResponse(String accessToken) {
-		this.accessToken = accessToken;
+	public JwtAuthenticationResponse() {
 	}
+	//	public JwtAuthenticationResponse(String accessToken) {
+//		this.accessToken = accessToken;
+//	}
 
 }
