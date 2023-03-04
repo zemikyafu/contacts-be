@@ -1,4 +1,4 @@
-package com.contact.backend.contactsbe.repositories.dto;
+package com.contact.backend.contactsbe.dto;
 
 import lombok.Data;
 

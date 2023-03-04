@@ -1,10 +1,10 @@
 package com.contact.backend.contactsbe.controller;
 
 
-import com.contact.backend.contactsbe.repositories.dto.ApiResponse;
-import com.contact.backend.contactsbe.repositories.dto.JwtAuthenticationResponse;
-import com.contact.backend.contactsbe.repositories.dto.LoginRequest;
-import com.contact.backend.contactsbe.repositories.dto.SignUpRequest;
+import com.contact.backend.contactsbe.dto.ApiResponse;
+import com.contact.backend.contactsbe.dto.JwtAuthenticationResponse;
+import com.contact.backend.contactsbe.dto.LoginRequest;
+import com.contact.backend.contactsbe.dto.SignUpRequest;
 import com.contact.backend.contactsbe.model.User;
 import com.contact.backend.contactsbe.repositories.UserRepository;
 import com.contact.backend.contactsbe.security.JwtTokenProvider;

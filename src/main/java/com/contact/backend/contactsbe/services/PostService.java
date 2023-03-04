@@ -9,10 +9,9 @@ import com.contact.backend.contactsbe.repositories.UserRepository;
 import com.contact.backend.contactsbe.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.contact.backend.contactsbe.repositories.dto.ResponseMessageDto;
+import com.contact.backend.contactsbe.dto.ResponseMessageDto;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PostService {

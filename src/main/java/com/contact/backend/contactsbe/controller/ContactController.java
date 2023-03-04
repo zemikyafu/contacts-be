@@ -6,7 +6,7 @@ import com.contact.backend.contactsbe.security.UserPrincipal;
 import com.contact.backend.contactsbe.services.ContactService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
-import com.contact.backend.contactsbe.repositories.dto.ResponseMessageDto;
+import com.contact.backend.contactsbe.dto.ResponseMessageDto;
 import java.util.List;
 
 @RestController
