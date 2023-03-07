@@ -35,6 +35,11 @@ public class ContactController {
         return contactService.get(id);
     }
 
+    @GetMapping("/findContactByUserId/{userid}")
+    public List<Contact> getContactByUserId(@PathVariable Long userid ) {
+        return contactService.getContactsByUserID(userid);
+    }
+
     @DeleteMapping ("/deleteContact/{id}")
     public ResponseMessageDto deleteContact(@PathVariable int id ) {
 

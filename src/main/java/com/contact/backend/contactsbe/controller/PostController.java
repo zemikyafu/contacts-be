@@ -1,5 +1,6 @@
 package com.contact.backend.contactsbe.controller;
 
+import com.contact.backend.contactsbe.model.Contact;
 import com.contact.backend.contactsbe.model.Post;
 import com.contact.backend.contactsbe.security.CurrentUser;
 import com.contact.backend.contactsbe.security.UserPrincipal;
@@ -36,6 +37,10 @@ public class PostController {
         return postService.get(id);
     }
 
+    @GetMapping("/findPostByUserId/{userid}")
+    public List<Post> getContactByUserId(@PathVariable Long userid ) {
+        return postService.getPostsByUserID(userid);
+    }
 
     @DeleteMapping ("/deletePost/{id}")
     public ResponseMessageDto deletePost(@PathVariable int id ) {

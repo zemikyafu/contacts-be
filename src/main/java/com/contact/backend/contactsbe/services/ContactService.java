@@ -38,6 +38,12 @@ public class ContactService {
         return contactRepository.save(contact);
     }
     //
+    public List<Contact> getContactsByUserID(Long id) {
+
+        return contactRepository.findByUser_id(id);
+
+    }
+
     public Contact get(Integer id) {
         Contact contact = new Contact ();
         if ( contactRepository.findById(id).isPresent())

@@ -88,4 +88,8 @@ public class PostService {
 
     }
 
+    public List<Post> getPostsByUserID(Long userid) {
+
+        return postRepository.findByUser_id(userid);
+    }
 }
