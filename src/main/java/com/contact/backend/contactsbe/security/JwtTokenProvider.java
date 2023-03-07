@@ -26,7 +26,8 @@ public class JwtTokenProvider {
 		Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
 		return Jwts.builder()
-				.setSubject(Long.toString(userPrincipal.getId()))
+				.setSubject(userPrincipal.getFirstName())
+				.setId(Long.toString(userPrincipal.getId()))
 				.setIssuedAt(new Date())
 				.setExpiration(expiryDate)
 				.signWith(SignatureAlgorithm.HS512, jwtSecret)
@@ -39,7 +40,7 @@ public class JwtTokenProvider {
 				.parseClaimsJws(token)
 				.getBody();
 
-		return Long.valueOf(claims.getSubject());
+		return Long.valueOf(claims.getId());
 	}
 	public String getSubjetcFromJWT(String token) {
 		Claims claims = Jwts.parser()

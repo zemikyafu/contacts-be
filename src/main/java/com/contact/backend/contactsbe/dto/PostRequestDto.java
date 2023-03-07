@@ -1,5 +1,5 @@
-package com.contact.backend.contactsbe.dto;
-
-public class PostRequestDto {
-
-}
+//package com.contact.backend.contactsbe.dto;
+//
+//public class PostRequestDto {
+//
+//}

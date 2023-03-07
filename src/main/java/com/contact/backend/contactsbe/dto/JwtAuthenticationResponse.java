@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class JwtAuthenticationResponse {
 	private String accessToken;
-	private String tokenType ;
-    private String message;
+	private Long id ;
+    private String name;
 	private boolean status ;
 
 	public JwtAuthenticationResponse() {
