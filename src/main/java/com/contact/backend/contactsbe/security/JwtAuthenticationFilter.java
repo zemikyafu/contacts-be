@@ -41,9 +41,20 @@ public  class JwtAuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		try {
+//			if (response instanceof HttpServletResponse){
+//
+//				String requestOrigin = request.getHeader("Origin");
+//				response.setHeader("Access-Control-Allow-Origin", requestOrigin);
+//				response.setHeader("Access-Control-Allow-Credentials", "true");
+//				//response.setHeader("Access-Control-Allow-Methods", "*");
+//				response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS, HEAD");
+//				response.setHeader("Access-Control-Max-Age", "3600");
+//				response.setHeader("Access-Control-Allow-Headers", "*");
+//			}
 
 			String jwt = getJwtFromRequest(request);
 			if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
+				response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
 				Long userId = tokenProvider.getUserIdFromJWT(jwt);
                 String subject=tokenProvider.getSubjetcFromJWT(jwt);
                 System.out.println("dofilter subject "+subject);

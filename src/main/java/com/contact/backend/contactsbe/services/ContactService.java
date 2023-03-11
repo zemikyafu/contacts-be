@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.contact.backend.contactsbe.dto.ResponseMessageDto;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContactService {
@@ -32,8 +33,6 @@ public class ContactService {
 
     public Contact save(Contact contact, UserPrincipal currentUser) {
         User user = userRepository.findUserByEmail(currentUser.getEmail());
-        System.out.println("user found "+user.getId() );
-        System.out.println("user found "+user.getName());
         contact.setUser(user);
         return contactRepository.save(contact);
     }
@@ -76,15 +75,23 @@ public class ContactService {
         ResponseMessageDto responseMessageDto = new ResponseMessageDto();
 
         try{
-//
+
+
             if (!contactRepository.findById(id).isEmpty())
             {
-                contactRepository.save(contact);
+                Optional<Contact> contactFound = contactRepository.findById(id);
+                Contact contactUpdate=  contactFound.get();
+                contactUpdate.setEmail(contact.getEmail());
+                contactUpdate.setName(contact.getName());
+                contactUpdate.setPhone(contact.getPhone());
+                contactUpdate.setType(contact.getType());
+                contactRepository.save(contactUpdate);
                 responseMessageDto.setMessage("Record Updated");
                 responseMessageDto.setStatus(true);
             }
             else
             {
+
                 responseMessageDto.setMessage("Contact not found");
                 responseMessageDto.setStatus(true);
             }

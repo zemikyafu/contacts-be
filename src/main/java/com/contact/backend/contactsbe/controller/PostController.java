@@ -5,6 +5,7 @@ import com.contact.backend.contactsbe.model.Post;
 import com.contact.backend.contactsbe.security.CurrentUser;
 import com.contact.backend.contactsbe.security.UserPrincipal;
 import com.contact.backend.contactsbe.services.PostService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 import com.contact.backend.contactsbe.dto.ResponseMessageDto;
@@ -38,8 +39,8 @@ public class PostController {
     }
 
     @GetMapping("/findPostByUserId/{userid}")
-    public List<Post> getContactByUserId(@PathVariable Long userid ) {
-        return postService.getPostsByUserID(userid);
+    public ResponseEntity<List<Post>> getContactByUserId(@PathVariable Long userid ) {
+        return ResponseEntity.ok((postService.getPostsByUserID(userid)));
     }
 
     @DeleteMapping ("/deletePost/{id}")

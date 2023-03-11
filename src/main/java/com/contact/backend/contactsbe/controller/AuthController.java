@@ -59,7 +59,6 @@ public class AuthController {
 				 jwtAuthenticationResponse.setName(jwtTokenProvider.getSubjetcFromJWT(jwt));
 				 jwtAuthenticationResponse.setId(jwtTokenProvider.getUserIdFromJWT(jwt));
 				jwtAuthenticationResponse.setAccessToken(jwt);
-				System.out.println(" jwt subject "+jwtTokenProvider.getSubjetcFromJWT(jwt) );
 
 
 			  }
