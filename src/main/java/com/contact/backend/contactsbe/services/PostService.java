@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.contact.backend.contactsbe.dto.ResponseMessageDto;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PostService {
@@ -52,7 +53,13 @@ public class PostService {
         try{
             if (!postRepository.findById(id).isEmpty())
             {
-                postRepository.save(post);
+
+                Optional<Post> postFound = postRepository.findById(id);
+                Post postUpdate=  postFound.get();
+                postUpdate.setTitle(post.getTitle());
+                postUpdate.setBody(post.getBody());
+
+                postRepository.save(postUpdate);
                 responseMessageDto.setMessage("Record Updated");
                 responseMessageDto.setStatus(true);
             }
