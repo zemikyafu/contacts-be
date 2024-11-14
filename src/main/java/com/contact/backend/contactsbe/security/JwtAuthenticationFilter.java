@@ -1,9 +1,5 @@
 package com.contact.backend.contactsbe.security;
 
-
-//import com.contact.backend.contactsbe.services.CustomUserDetailsService;
-//import com.contact.backend.contactsbe.services.CustomUserDetailsServiceImpl;
-//import com.contact.backend.contactsbe.services.CustomUserDetailsService;
 import com.contact.backend.contactsbe.services.CustomUserDetailsService;
 import com.contact.backend.contactsbe.services.JwtUserDetailsService;
 import org.slf4j.Logger;
@@ -14,12 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
-//import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
-//import javax.servlet.FilterChain;
-//import javax.servlet.ServletException;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,17 +32,6 @@ public  class JwtAuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		try {
-//			if (response instanceof HttpServletResponse){
-//
-//				String requestOrigin = request.getHeader("Origin");
-//				response.setHeader("Access-Control-Allow-Origin", requestOrigin);
-//				response.setHeader("Access-Control-Allow-Credentials", "true");
-//				//response.setHeader("Access-Control-Allow-Methods", "*");
-//				response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS, HEAD");
-//				response.setHeader("Access-Control-Max-Age", "3600");
-//				response.setHeader("Access-Control-Allow-Headers", "*");
-//			}
-
 			String jwt = getJwtFromRequest(request);
 			if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
 				response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
