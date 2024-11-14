@@ -19,4 +19,9 @@ frontend application.
 authenticate requests made to access the endpoints defined inside controller classes. The "AuthenticationEntryPoint" class is a Spring Security implementation that
 catches unauthorized requests and returns a 401-response code when an endpoint is accessed without proper authentication
 
-
+## Technologies Used:
+* Spring Boot: A Java-based framework for building scalable and maintainable backend applications.
+* Spring Security: Used for authentication and authorization to ensure secure access control for users.
+* JPA/Hibernate: Used for ORM (Object-Relational Mapping) to interact with the database.
+* REST API: Exposes endpoints for managing contacts in a stateless manner.
+* MySQL: A relational database used for storing and managing contact data.
