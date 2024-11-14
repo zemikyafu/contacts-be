@@ -18,10 +18,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String  email) {
-		System.out.println("email search "+email);
 		User user = userRepository.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException(String.format("User not found with this username or email: %s", email)));
-		System.out.println("password "+user.getPassword());
 		return UserPrincipal.create(user);
 	}
 
