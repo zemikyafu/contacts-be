@@ -28,18 +28,4 @@ public class JwtUserDetailsService implements UserDetailsService {
 
         }
     }
-//@Override
-//public UserDetails loadUserByUsername(Long id) throws
-//            UsernameNotFoundException {
-//        if (1==id) {
-//            return new User("knoldusnext",
-//                    "$2a$10$ixlPY3AAd4ty1l6E2IsQ9OFZi2ba9ZQE0bP7RFcGIWNhyFrrT3YUi",
-//                    new ArrayList<>());
-//        } else {
-//            throw new UsernameNotFoundException("User not found with username: " + id);
-//
-//        }
-//    }
-
-
 }
