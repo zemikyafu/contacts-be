@@ -49,25 +49,6 @@ public class ContactService {
             return contactRepository.findById(id).get();
         else return contact ;
     }
-    //
-//    public Optional<Contact> updateContact(Contact contact, int id)
-//    {
-//
-//
-//        return Optional.of(contactRepository.findById(id)
-//                .map(contactFound -> {
-//                    contactFound.setId(id);
-//                    contactFound.setName(contact.getName());
-//                    contactFound.setEmail(contact.getEmail());
-//                    contactFound.setType(contact.getType());
-//                    contactFound.setPhone(contact.getPhone());
-//                    return contactRepository.save(contact);
-//                }).orElseGet(() -> {
-//                    contact.setId(id);
-//                    return contactRepository.save(contact);
-//                }));
-//
-//    }
 
     public ResponseMessageDto updateContact(Contact contact, int id)
     {
